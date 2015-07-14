@@ -109,8 +109,19 @@ class Mutation:
         return self.__hit_set
     
     def showPlot(self):
-        plt.plot([hit[0] for hit in self.__hit_set],\
-                 [hit[1] for hit in self.__hit_set], 'ro')
+        hit_list = list(self.__hit_set)
+        hit_list.sort()
+        
+        first_hit = hit_list[0]
+        last_hit = hit_list[-1]
+        
+        non_hit_list = self.__ENVIRONMENT_LIST
+        for i in hit_list:
+            non_hit_list.remove(i)
+        
+        plt.plot([point[0] for point in hit_list], [point[1] for point in hit_list], 'go',\
+                 [first_hit[0], last_hit[0]], [first_hit[1], last_hit[1]], 'b-',\
+                 [point[0] for point in non_hit_list], [point[1] for point in non_hit_list], 'ro')
         plt.show()
 
 def main():
