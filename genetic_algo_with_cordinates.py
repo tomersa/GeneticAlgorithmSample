@@ -3,17 +3,14 @@ import random
 import math
 import matplotlib.pyplot as plt
 
-#Constants
-CYCLES = 10 ** 4
-
 class EnvironmentData():
     #Defs
     __ENVIRONMENT_LIST = None
-    __NUMBER_OF_POINTS = 1000
     __LOW_BOUND = 1
     __HIGH_BOUND = 100
     
-    def __init__(self):
+    def __init__(self, number_of_points):
+        self.__number_of_points = number_of_points
         self.__generateData()
         self.__sort()
     
@@ -23,7 +20,7 @@ class EnvironmentData():
     def __generateData(self):
         self.__ENVIRONMENT_LIST = list()
         
-        for i in xrange(EnvironmentData.__NUMBER_OF_POINTS):
+        for i in xrange(self.__number_of_points):
              self.__ENVIRONMENT_LIST.append((random.randint(EnvironmentData.__LOW_BOUND, EnvironmentData.__HIGH_BOUND),\
                                              random.randint(EnvironmentData.__LOW_BOUND, EnvironmentData.__HIGH_BOUND)))
 
@@ -117,12 +114,26 @@ class Mutation:
         plt.show()
 
 def main():
-    env_list = EnvironmentData()
+    #Constants
+    DEFAULT_NUMBER_OF_CYCLES = 10 ** 4
+    DEFAULT_NUMBER_OF_POINTS = 1000
+    
+    #Getting number of cycles
+    cycles = DEFAULT_NUMBER_OF_CYCLES
+    number_of_points = DEFAULT_NUMBER_OF_POINTS
+    
+    if len(sys.argv) > 2:
+        number_of_points = int(sys.argv[2])
+    
+    if len(sys.argv) > 1:
+        cycles = int(sys.argv[1])
+    
+    env_list = EnvironmentData(number_of_points)
     
     m1 = Mutation(env_list.getEnvironmentList())
     m2 = Mutation(env_list.getEnvironmentList())
     
-    for i in xrange(CYCLES):
+    for i in xrange(cycles):
         m_temp = m1.race(m2)
         m2 = Mutation(env_list.getEnvironmentList())
         m1 = m_temp
@@ -130,6 +141,9 @@ def main():
     m1.printString()
     m1.printSurvivalRate()
     m1.showPlot()
+    
+    print "Number of cycles run: {0}".format(cycles)
+    print "Number of points in the grid: {0}".format(number_of_points)
 
 if __name__ == "__main__":
     sys.exit(main())
