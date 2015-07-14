@@ -9,9 +9,9 @@ CYCLES = 10 ** 4
 class EnvironmentData():
     #Defs
     __ENVIRONMENT_LIST = None
-    __SIZE = 1000
-    __LOW_VALUE = 1
-    __HIGH_VALUE = 100
+    __NUMBER_OF_POINTS = 1000
+    __LOW_BOUND = 1
+    __HIGH_BOUND = 100
     
     def __init__(self):
         self.__generateData()
@@ -23,20 +23,20 @@ class EnvironmentData():
     def __generateData(self):
         self.__ENVIRONMENT_LIST = list()
         
-        for i in xrange(EnvironmentData.__SIZE):
-             self.__ENVIRONMENT_LIST.append((random.randint(EnvironmentData.__LOW_VALUE, EnvironmentData.__HIGH_VALUE),\
-                                             random.randint(EnvironmentData.__LOW_VALUE, EnvironmentData.__HIGH_VALUE)))
+        for i in xrange(EnvironmentData.__NUMBER_OF_POINTS):
+             self.__ENVIRONMENT_LIST.append((random.randint(EnvironmentData.__LOW_BOUND, EnvironmentData.__HIGH_BOUND),\
+                                             random.randint(EnvironmentData.__LOW_BOUND, EnvironmentData.__HIGH_BOUND)))
 
     def __sort(self):
         self.__ENVIRONMENT_LIST.sort()
         
     @staticmethod
     def getLow():
-        return EnvironmentData.__LOW_VALUE
+        return EnvironmentData.__LOW_BOUND
 
     @staticmethod
     def getHigh():
-        return EnvironmentData.__HIGH_VALUE
+        return EnvironmentData.__HIGH_BOUND
 
 class Mutation:
     #Defs
@@ -54,7 +54,7 @@ class Mutation:
         self_survival_rate = self.getSurvivalRate()
         mutation_survival_rate = mutation.getSurvivalRate()
         
-        print "race m1:%d vs m2:%d" % (self_survival_rate, mutation_survival_rate)
+        print "race m1 hit %d points and m2 hit %d points" % (self_survival_rate, mutation_survival_rate)
         if mutation_survival_rate > self_survival_rate:
             self.__equal_node = None
             return mutation
