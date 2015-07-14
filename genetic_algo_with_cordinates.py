@@ -39,13 +39,40 @@ class Mutation:
     #Defs
     __ENVIRONMENT_LIST = None
     
-    def __init__(self, env_list):
+    def __init__(self, env_list, current_mutation = None, change_factor = None):
+        if not current_mutation is None and not change_factor is None:
+            self.__initHelper(env_list, current_mutation, change_factor)
+
+        else:
+            self.__ENVIRONMENT_LIST = env_list 
+            self.__hit_set = set()
+            self.__equal_node = None
+            self.__height = random.randint(EnvironmentData.getLow(), EnvironmentData.getHigh())
+            self.__inclination = random.randint(EnvironmentData.getLow(), EnvironmentData.getHigh())
+            self.__checkSurvivalRate()
+
+    def __initHelper(self, env_list, current_mutation, change_factor):
         self.__ENVIRONMENT_LIST = env_list 
         self.__hit_set = set()
         self.__equal_node = None
+        
+        #Randomizing close height and inclination
+        height = current_mutation.getHeight()
+        inclination = current_mutation.getInclination()
+        
+        #Adding randomization in range [original - change_factor, original + change_factor]
+        height = height + random.randint(-change_factor, change_factor)
+        inclination = inclination + random.randint(-change_factor, change_factor)
+        
         self.__height = random.randint(EnvironmentData.getLow(), EnvironmentData.getHigh())
         self.__inclination = random.randint(EnvironmentData.getLow(), EnvironmentData.getHigh())
         self.__checkSurvivalRate()
+    
+    def getHeight(self):
+        return self.__height
+    
+    def getInclination(self):
+        return self.__inclination
     
     def race(self, mutation):
         self_survival_rate = self.getSurvivalRate()
@@ -126,12 +153,17 @@ class Mutation:
 
 def main():
     #Constants
-    DEFAULT_NUMBER_OF_CYCLES = 3 * 10 ** 4
+    DEFAULT_NUMBER_OF_CYCLES = 5 * 10 ** 4
     DEFAULT_NUMBER_OF_POINTS = 300
+    DEFAULT_CHANGE_FACTOR = 1
     
     #Getting number of cycles
     cycles = DEFAULT_NUMBER_OF_CYCLES
     number_of_points = DEFAULT_NUMBER_OF_POINTS
+    change_factor = DEFAULT_CHANGE_FACTOR
+    
+    if len(sys.argv) > 3:
+        change_factor = int(sys.argv[3])
     
     if len(sys.argv) > 2:
         number_of_points = int(sys.argv[2])
@@ -146,7 +178,7 @@ def main():
     
     for i in xrange(cycles):
         m_temp = m1.race(m2)
-        m2 = Mutation(env_list.getEnvironmentList())
+        m2 = Mutation(env_list.getEnvironmentList(), m_temp, change_factor)
         m1 = m_temp
 
     m1.printString()
@@ -155,6 +187,7 @@ def main():
     
     print "Number of cycles run: {0}".format(cycles)
     print "Number of points in the grid: {0}".format(number_of_points)
+    print "Change factor: {0}".format(change_factor)
 
 if __name__ == "__main__":
     sys.exit(main())
