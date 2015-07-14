@@ -126,8 +126,8 @@ class Mutation:
 
 def main():
     #Constants
-    DEFAULT_NUMBER_OF_CYCLES = 10 ** 4
-    DEFAULT_NUMBER_OF_POINTS = 1000
+    DEFAULT_NUMBER_OF_CYCLES = 3 * 10 ** 4
+    DEFAULT_NUMBER_OF_POINTS = 300
     
     #Getting number of cycles
     cycles = DEFAULT_NUMBER_OF_CYCLES
