@@ -77,11 +77,10 @@ class Mutation:
     def race(self, mutation):
         self_survival_rate = self.getSurvivalRate()
         mutation_survival_rate = mutation.getSurvivalRate()
-        
-        print "race m1(%s) hit %d points and m2(%s) hit %d points" % (self.toString(), self_survival_rate, mutation.toString(), mutation_survival_rate)
 
         if mutation_survival_rate > self_survival_rate:
             self.__equal_node = None
+            print "Current[%s] has %d hits and Mutation[%s] won with %d hits!" % (self.toString(), self_survival_rate, mutation.toString(), mutation_survival_rate)
             return mutation
         
         if mutation_survival_rate == self_survival_rate:
