@@ -78,8 +78,8 @@ class Mutation:
         self_survival_rate = self.getSurvivalRate()
         mutation_survival_rate = mutation.getSurvivalRate()
         
-        print "race m1 hit %d points and m2 hit %d points" % (self_survival_rate, mutation_survival_rate)
-        
+        print "race m1(%s) hit %d points and m2(%s) hit %d points" % (self.toString(), self_survival_rate, mutation.toString(), mutation_survival_rate)
+
         if mutation_survival_rate > self_survival_rate:
             self.__equal_node = None
             return mutation
@@ -132,6 +132,9 @@ class Mutation:
                                                                self.__inclination,\
                                                                self.__survival_rate)
         print "Hit Set:\n%s" % self.__hit_set
+        
+    def toString(self):
+        return "height: %d, inclination: %d" % (self.__height, self.__inclination)
         
     def getHitSet(self):
         return self.__hit_set
