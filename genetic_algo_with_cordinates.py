@@ -159,7 +159,7 @@ def main():
     #Constants
     DEFAULT_NUMBER_OF_CYCLES = 5 * 10 ** 4
     DEFAULT_NUMBER_OF_POINTS = 1000
-    DEFAULT_CHANGE_FACTOR = 5
+    DEFAULT_CHANGE_FACTOR = 30
     
     #Getting number of cycles
     cycles = DEFAULT_NUMBER_OF_CYCLES
