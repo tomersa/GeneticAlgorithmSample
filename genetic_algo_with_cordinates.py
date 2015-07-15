@@ -63,9 +63,9 @@ class Mutation:
         #Adding randomization in range [original - change_factor, original + change_factor]
         height = height + random.randint(-change_factor, change_factor)
         inclination = inclination + random.randint(-change_factor, change_factor)
-        
-        self.__height = random.randint(EnvironmentData.getLow(), EnvironmentData.getHigh())
-        self.__inclination = random.randint(EnvironmentData.getLow(), EnvironmentData.getHigh())
+       
+        self.__height = height 
+        self.__inclination = inclination
         self.__checkSurvivalRate()
     
     def getHeight(self):
@@ -79,6 +79,7 @@ class Mutation:
         mutation_survival_rate = mutation.getSurvivalRate()
         
         print "race m1 hit %d points and m2 hit %d points" % (self_survival_rate, mutation_survival_rate)
+        
         if mutation_survival_rate > self_survival_rate:
             self.__equal_node = None
             return mutation
@@ -154,8 +155,8 @@ class Mutation:
 def main():
     #Constants
     DEFAULT_NUMBER_OF_CYCLES = 5 * 10 ** 4
-    DEFAULT_NUMBER_OF_POINTS = 300
-    DEFAULT_CHANGE_FACTOR = 1
+    DEFAULT_NUMBER_OF_POINTS = 1000
+    DEFAULT_CHANGE_FACTOR = 5
     
     #Getting number of cycles
     cycles = DEFAULT_NUMBER_OF_CYCLES
