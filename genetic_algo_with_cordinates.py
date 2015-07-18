@@ -141,17 +141,28 @@ class Mutation:
     def showPlot(self):
         hit_list = list(self.__hit_set)
         hit_list.sort()
-        
-        first_hit = hit_list[0]
-        last_hit = hit_list[-1]
-        
+	
+	draw_line = True        
+
+	if len(hit_list) < 2:
+		draw_line = False
+		print "Not enough hit points to show line in plot"
+	else:
+		first_hit = hit_list[0]
+		last_hit = hit_list[-1]
+
         non_hit_list = self.__ENVIRONMENT_LIST
         for i in hit_list:
             non_hit_list.remove(i)
         
-        plt.plot([point[0] for point in hit_list], [point[1] for point in hit_list], 'go',\
-                 [first_hit[0], last_hit[0]], [first_hit[1], last_hit[1]], 'b-',\
-                 [point[0] for point in non_hit_list], [point[1] for point in non_hit_list], 'ro')
+	if draw_line:
+	        plt.plot([point[0] for point in hit_list], [point[1] for point in hit_list], 'go',\
+	                 [first_hit[0], last_hit[0]], [first_hit[1], last_hit[1]], 'b-',\
+	                 [point[0] for point in non_hit_list], [point[1] for point in non_hit_list], 'ro')
+	else:
+	        plt.plot([point[0] for point in hit_list], [point[1] for point in hit_list], 'go',\
+	                 [point[0] for point in non_hit_list], [point[1] for point in non_hit_list], 'ro')
+
         plt.show()
 
 def main():
